@@ -52,7 +52,7 @@
   </div>
   <div class="flex flex-col mainContent">
     {#if googleMapsLoaded}
-      <div class="p-2 mt-4 bg-white rounded-lg shadow lg:h-full lg:mt-0" style="height: 36rem;">
+      <div class="p-2 mt-4 bg-white rounded-lg shadow h-96 lg:h-full lg:mt-0">
         <Map />
       </div>
     {:else}
