@@ -1,4 +1,4 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![github pages](https://github.com/solacese/faa-scds-feeds-gui/workflows/github%20pages/badge.svg?branch=master)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![github pages](https://github.com/solacese/faa-scds-feeds-gui/workflows/gh-pages/badge.svg?branch=master)
 
 # FAA SCDS Feeds GUI
 
