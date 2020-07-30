@@ -4,16 +4,16 @@
 
 A browser application that implements a geo-filtering algorithm to dynamically generate topic subscriptions that attract pre-filtered sets of streaming GPS data from SCDS feeds.
 
-[SWIM Feed Handler](https://github.com/solacese/swim-feed-handler) is the producer of the data this GUI is displaying. It's an application designed to relay messages from the FAA's publicly available US System Wide Information Management (SWIM) data feeds to a Solace PubSub+ Event Broker. The GitHub repository includes a thorough overview of the steps required to sign up for SCDS data and to run the application locally.
+This GUI displays data produced by [SWIM Feed Handler](https://github.com/solacese/swim-feed-handler), an application designed to relay messages from the FAA's publicly available US System Wide Information Management (SWIM) data feeds to a Solace PubSub+ Event Broker. The SWIM Feed Handler GitHub repository includes a thorough overview of the steps required to sign up with the FAA to receive SCDS data and to run the application locally.
 
 ## Public URL
 
-[https://solace-scds-feeds-gui.netlify.app/](https://solace-scds-feeds-gui.netlify.app/)
+[https://solacese.github.io/faa-scds-feeds-gui/](https://solacese.github.io/faa-scds-feeds-gui/)
 
 ## Branch structure
 
-- master: source code for the site hosted at the above public URL
-- kdb-stats: includes a panel to display stats produced by an accompanying project, [scds-solace-kdb](https://github.com/solacese/scds-solace-kdb)
+- **master**: source code for the site hosted at the above public URL
+- **kdb-stats**: includes a panel to display stats produced by an accompanying project, [scds-solace-kdb](https://github.com/solacese/scds-solace-kdb)
 
 ## Run locally
 
@@ -25,7 +25,7 @@ cd faa-scds-feeds-gui
 npm i
 ```
 
-Then, edit `solace.config.js` and `google-maps.config.js`. The Google Maps API key included in this repository is locked down to the public URL we have hosted—so you'll need your own if you want to run it locally. Follow along [Google's instructions for getting a Maps JavaScript API key](https://developers.google.com/maps/documentation/javascript/get-api-key)
+Then, edit `solace.config.js` and `google-maps.config.js`. The Google Maps API key included in this repository is restricted to this application's [public URL](https://solacese.github.io/faa-scds-feeds-gui/), so you'll need your own if you want to develop locally. You can do this by following along [Google's instructions for getting a Maps JavaScript API key](https://developers.google.com/maps/documentation/javascript/get-api-key).
 
 Once the connection details and access key are configured, you can run the app using [Rollup](https://rollupjs.org):
 
