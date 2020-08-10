@@ -6,6 +6,7 @@
   import ConnectionForm from "./ConnectionForm.svelte";
   import FeedToggles from "./FeedToggles.svelte";
   import Map from "./Map.svelte";
+  import Console from "./Console.svelte";
 
   export let googleMapsLoaded;
 
@@ -15,6 +16,8 @@
   setContext(solaceContextKey, {
     getSolaceClient: () => solaceClient,
   });
+
+  let isConsoleExpanded = true;
 </script>
 
 <style>
@@ -46,9 +49,9 @@
     <div>
       <ConnectionForm />
     </div>
-    <div class="mt-4">
+    <!-- <div class="mt-4">
       <FeedToggles />
-    </div>
+    </div> -->
   </div>
   <div class="flex flex-col mainContent">
     {#if googleMapsLoaded}
@@ -58,5 +61,8 @@
     {:else}
       <div class="w-full bg-blue-300 rounded-lg shadow" />
     {/if}
+    <!-- <div class="w-full mt-4 bg-white rounded-lg shadow">
+      <Console bind:isExpanded={isConsoleExpanded} />
+    </div> -->
   </div>
 </main>

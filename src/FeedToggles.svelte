@@ -1,5 +1,5 @@
 <script>
-  import { activeFeeds } from "./stores";
+  //import { activeFeeds } from "./stores";
   import SvgAirplane from "./SvgAirplane.svelte";
 
   function toggle(feedName) {
@@ -14,7 +14,7 @@
       on:click={() => toggle('fdps')}
       role="checkbox"
       aria-checked="false"
-      class={`h-24 w-36 flex flex-col justify-center items-center p-2 mr-2 border-2 rounded-md shadow-sm cursor-pointer focus:outline-none focus:shadow-outline ${$activeFeeds['fdps'] ? 'bg-blue-100 border-blue-500' : ''}`}>
+      class={`h-24 w-36 flex flex-col justify-center items-center p-2 mr-2 border rounded-md shadow-sm cursor-pointer focus:outline-none focus:shadow-outline ${$activeFeeds['fdps'] ? 'bg-blue-100 border-blue-500' : ''}`}>
       <div class="flex-shrink-0 h-10">
         <SvgAirplane />
       </div>

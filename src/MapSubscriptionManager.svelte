@@ -1,6 +1,6 @@
 <script>
   import { getContext } from "svelte";
-  import { fdpsFeedCache, activeFeeds, filters, markers, mapUpdateBatch } from "./stores";
+  import { fdpsFeedCache, filters, markers, mapUpdateBatch } from "./stores";
   import { solaceContextKey } from "./solace-client";
   import { parseFdpsPositionTick, getRotatedIconUrl } from "./feed-fdps";
   import { containedByOneOrMoreRectangleBounds, createFdpsSubscriptionList } from "./geo-filtering";
@@ -13,49 +13,65 @@
   $: {
     if ($solaceClient) {
       try {
-        if ($activeFeeds["fdps"]) {
-          // generate the list of subscriptions that correspond to a map of rectangle filters," "
-          // this statement executes any time the filters map is updated
-          const updatedSubscriptionList = createFdpsSubscriptionList($filters);
-          // diff updatedSubscriptionList and activeSubscriptions to see what subscriptions need to be applied
-          let subscribeList = [];
-          for (const topic of Object.keys(updatedSubscriptionList)) {
-            if (!activeSubscriptions[topic]) {
-              subscribeList.push(topic);
-            }
+        //if ($activeFeeds["fdps"]) {
+        // generate the list of subscriptions that correspond to a map of rectangle filters," "
+        // this statement executes any time the filters map is updated
+        const updatedSubscriptionList = createFdpsSubscriptionList($filters);
+        // diff updatedSubscriptionList and activeSubscriptions to see what subscriptions need to be applied
+        let subscribeList = [];
+        for (const topic of Object.keys(updatedSubscriptionList)) {
+          if (!activeSubscriptions[topic]) {
+            subscribeList.push(topic);
           }
-          // diff activeSubscriptions and updatedSubscriptionList to see what to unsubscribe from
-          let unsubscribeList = [];
-          for (const topic of Object.keys(activeSubscriptions)) {
-            if (!updatedSubscriptionList[topic]) {
-              unsubscribeList.push(topic);
-            }
-          }
-          // apply changes to session
-          for (const topic of subscribeList) {
-            subscribeFdpsPositionTopic(topic);
-            activeSubscriptions[topic] = true;
-          }
-          for (const topic of unsubscribeList) {
-            $solaceClient.unsubscribe(topic);
-            delete activeSubscriptions[topic];
-          }
-
-          console.log("MapSubscriptionManager: subscriptions updated to...");
-          console.dir(Object.keys(activeSubscriptions));
         }
+        // diff activeSubscriptions and updatedSubscriptionList to see what to unsubscribe from
+        let unsubscribeList = [];
+        for (const topic of Object.keys(activeSubscriptions)) {
+          if (!updatedSubscriptionList[topic]) {
+            unsubscribeList.push(topic);
+          }
+        }
+        // apply changes to session
+        for (const topic of subscribeList) {
+          subscribeFdpsPositionTopic(topic);
+          activeSubscriptions[topic] = true;
+        }
+        for (const topic of unsubscribeList) {
+          $solaceClient.unsubscribe(topic);
+          delete activeSubscriptions[topic];
+        }
+
+        console.log("MapSubscriptionManager: subscriptions updated to...");
+        console.dir(Object.keys(activeSubscriptions));
+        //}
       } catch {
         console.error("MapSubscriptionManager - error adding subscriptions");
       }
     }
   }
 
-  // wipe subscriptions on client disconnect
+  // wipe subscription manager subscriptions if client disconnects
   $: {
     if (!$solaceClient) {
       activeSubscriptions = {};
     }
   }
+
+  // unsubscribe from and wipe subscription manager subscriptions when feed is toggled off
+  // $: {
+  //   if ($solaceClient) {
+  //     try {
+  //       if (!$activeFeeds["fdps"]) {
+  //         $solaceClient.unsubscribeAll();
+  //         activeSubscriptions = {};
+  //         console.log("MapSubscriptionManager: subscriptions updated to...");
+  //         console.dir(Object.keys(activeSubscriptions));
+  //       }
+  //     } catch {
+  //       console.error("MapSubscriptionManager - error removing subscriptions");
+  //     }
+  //   }
+  // }
 
   function subscribeFdpsPositionTopic(topic) {
     $solaceClient.subscribe(topic, (msg) => {
@@ -90,6 +106,7 @@
         title: fdpsPositionTick.aircraftIdentifier,
         icon: getRotatedIconUrl(fdpsPositionTick),
       });
+      marker.type = "marker";
 
       // if a marker already exists for the aircraft,
       if ($markers[fdpsPositionTick.aircraftIdentifier]) {

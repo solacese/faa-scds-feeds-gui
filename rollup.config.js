@@ -1,4 +1,5 @@
 import svelte from "rollup-plugin-svelte";
+import preprocess from "svelte-preprocess";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import babel from "@rollup/plugin-babel";
@@ -21,6 +22,27 @@ export default {
       "process.env.NODE_ENV": JSON.stringify("production"),
     }),
     svelte({
+      // help the parser understand language features you intent to use, typescript support goes here
+      // https://github.com/sveltejs/svelte-preprocess#what-is-it
+      preprocess: preprocess({
+        babel: {
+          presets: [
+            [
+              "@babel/preset-env",
+              {
+                loose: true,
+                // No need for babel to resolve modules
+                modules: false,
+                targets: {
+                  // ! Very important. Target es6+
+                  esmodules: true,
+                },
+              },
+            ],
+          ],
+          plugins: ["@babel/plugin-proposal-optional-chaining"],
+        },
+      }),
       // enable run-time checks when not in production
       dev: !production,
       // we'll extract any component CSS out into

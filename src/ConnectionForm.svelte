@@ -158,6 +158,7 @@
           <input
             id="clientPassword"
             class="block w-full form-input sm:text-sm sm:leading-5"
+            type="password"
             placeholder=""
             bind:value={password} />
         </div>

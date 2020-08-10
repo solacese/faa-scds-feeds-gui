@@ -265,8 +265,6 @@ export function createSolaceClient({
       reject();
     }
     // unsubscribe from all topics on client
-    Object.keys(subscriptions).map((topicFilter, _) => console.log(topicFilter));
-
     Object.keys(subscriptions).map((topicFilter, _) => unsubscribe(topicFilter));
   }
 

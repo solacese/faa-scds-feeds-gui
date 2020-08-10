@@ -48,7 +48,7 @@ export function getRotatedIconUrl(fdpsPositionTick) {
   if (heading > 292.5 && heading < 337.5) {
     iconAngle = "315";
   }
-  return `/images/plane-${iconAngle}.png`;
+  return `/images/plane-sprite/plane-${iconAngle}.png`;
 }
 
 function radiansToDegrees(radians) {

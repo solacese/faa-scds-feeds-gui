@@ -47,13 +47,20 @@
       if (map) {
         // remove markers that need to be updated
         if (Object.keys($mapUpdateBatch.remove).length > 0) {
-          const markersRemoveBatch = $markerCluster.getMarkers().filter((marker) => {
-            return $mapUpdateBatch.remove[marker.title];
-          });
-          $markerCluster.removeMarkers(markersRemoveBatch, true); // second parameter nodraw set to true because don't need 2 redraws per update
+          $markerCluster.removeMarkers(
+            // removeMarkers() accepts an array of markers to remove,
+            // but careful it is deceiving — passing in the references to the markers you add won't help,
+            // because the MarkerClusterer keeps its own set of references to the markers it adds.
+            // This means to remove markers, you need to filter the array of references returned by .getMarkers().
+            // @googlemaps, I learned this through brute force troubleshooting & some obscure blog post, not docs :(
+            $markerCluster.getMarkers().filter((marker) => {
+              return $mapUpdateBatch.remove[marker.title];
+            }),
+            true
+          ); // second parameter nodraw set to true because don't need 2 redraws per update
         }
         // add markers that are marked for adding
-        $markerCluster.addMarkers(Object.values($mapUpdateBatch.add)); // second parameter nodraw set to true because we're adding
+        $markerCluster.addMarkers(Object.values($mapUpdateBatch.add));
         // update markers lookup table
         $markers = { ...$markers, ...$mapUpdateBatch.add };
         // clear mapUpdateBatch object
@@ -69,8 +76,13 @@
   }
 </script>
 
-<div bind:this={container} class="w-full h-full" />
-{#if map}
-  <MapDrawingManager {map} />
-  <MapSubscriptionManager />
-{/if}
+<div class="flex flex-col w-full h-full">
+  <div class="flex-shrink-0 h-8 p-1 my-auto">
+    {#if map}
+      <MapDrawingManager {map} />
+    {/if}
+  </div>
+  <div bind:this={container} class="w-full h-full" />
+</div>
+
+<MapSubscriptionManager />

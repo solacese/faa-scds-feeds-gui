@@ -1,5 +1,5 @@
 {
-  "name": "faa-scds-feeds-gui",
+  "name": "faa-scds-feeds-gui-internal",
   "version": "1.0.0",
   "scripts": {
     "watch:tailwind": "postcss public/tailwind.css -o public/index.css -w",
@@ -29,12 +29,14 @@
     "sirv-cli": "^0.4.6"
   },
   "dependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.11.0",
     "@google/markerclustererplus": "^5.0.4",
     "@sveltejs/svelte-virtual-list": "^3.0.1",
     "@tailwindcss/ui": "^0.3.0",
     "@xstate/fsm": "^1.4.0",
     "solclientjs": "^10.4.0",
     "svelte": "^3.23.2",
+    "svelte-preprocess": "^4.0.10",
     "tailwindcss": "^1.4.6"
   }
 }

@@ -56,6 +56,6 @@ You can run the newly built app with `npm run start`. This uses [sirv](https://g
 ## Resources
 
 - [SWIM Flight Data Publication Service](https://www.faa.gov/air_traffic/technology/swim/sfdps/) - info about the data feeds this application uses for real-time aircraft position data
-- [Topic Hierarchy and Topic Architecture Best Practices](https://solace.com/blog/topic-hierarchy-best-practices/) - a blog post dedicated to describing how to get the most out of your topic space, like we did with the aircraft position events
+- [Topic Hierarchy and Topic Architecture Best Practices](https://solace.com/blog/topic-hierarchy-best-practices/) - a blog post dedicated to describing how to get the most out of your topic space (e.g. putting lat/lng values in the topic space enables geo-filtering).
 - [Google Maps Marker Clustering](https://developers.google.com/maps/documentation/javascript/marker-clustering) - docs that help explain the aircraft marker clustering that improves map performance
 - [solclientjs](https://docs.solace.com/API-Developer-Online-Ref-Documentation/nodejs/readme.html) - docs for Solace's native JavaScript API
