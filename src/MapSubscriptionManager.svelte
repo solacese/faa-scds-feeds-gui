@@ -1,6 +1,6 @@
 <script>
   import { getContext } from "svelte";
-  import { fdpsFeedCache, filters, markers, mapUpdateBatch } from "./stores";
+  import { fdpsFeedCache, filters, markers, mapCurrentSelection, mapUpdateBatch } from "./stores";
   import { solaceContextKey } from "./solace-client";
   import { parseFdpsPositionTick, getRotatedIconUrl } from "./feed-fdps";
   import { containedByOneOrMoreRectangleBounds, createFdpsSubscriptionList } from "./geo-filtering";
@@ -13,8 +13,7 @@
   $: {
     if ($solaceClient) {
       try {
-        //if ($activeFeeds["fdps"]) {
-        // generate the list of subscriptions that correspond to a map of rectangle filters," "
+        // generate the list of subscriptions that correspond to a map of rectangle filters,
         // this statement executes any time the filters map is updated
         const updatedSubscriptionList = createFdpsSubscriptionList($filters);
         // diff updatedSubscriptionList and activeSubscriptions to see what subscriptions need to be applied
@@ -57,22 +56,6 @@
     }
   }
 
-  // unsubscribe from and wipe subscription manager subscriptions when feed is toggled off
-  // $: {
-  //   if ($solaceClient) {
-  //     try {
-  //       if (!$activeFeeds["fdps"]) {
-  //         $solaceClient.unsubscribeAll();
-  //         activeSubscriptions = {};
-  //         console.log("MapSubscriptionManager: subscriptions updated to...");
-  //         console.dir(Object.keys(activeSubscriptions));
-  //       }
-  //     } catch {
-  //       console.error("MapSubscriptionManager - error removing subscriptions");
-  //     }
-  //   }
-  // }
-
   function subscribeFdpsPositionTopic(topic) {
     $solaceClient.subscribe(topic, (msg) => {
       // parse tick and create a LatLng Google Maps object to help w/ map geometry logic
@@ -108,6 +91,11 @@
       });
       marker.type = "marker";
 
+      // add event listener that selects the marker when it is clicked
+      google.maps.event.addListener(marker, "click", function () {
+        setSelection(marker);
+      });
+
       // if a marker already exists for the aircraft,
       if ($markers[fdpsPositionTick.aircraftIdentifier]) {
         //mark the old marker to be removed
@@ -136,5 +124,21 @@
         add: { ...$mapUpdateBatch.add, [fdpsPositionTick.aircraftIdentifier]: marker },
       };
     });
+  }
+
+  function clearMapSelection() {
+    if ($mapCurrentSelection) {
+      if ($mapCurrentSelection.type == "rectangle") {
+        $mapCurrentSelection.setOptions({ fillColor: "#1c64f2" });
+        $mapCurrentSelection = null;
+      } else {
+        $mapCurrentSelection = null;
+      }
+    }
+  }
+
+  function setSelection(shape) {
+    clearMapSelection();
+    $mapCurrentSelection = shape;
   }
 </script>

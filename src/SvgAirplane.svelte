@@ -5,7 +5,7 @@
   strokeLinecap="round"
   strokeLinejoin="round"
   strokeMiterlimit={1.5}
-  class="h-full">
+  class="w-full">
   <path
     d="M33.267 52.7S6.077 46.904 5.365 41.179c-.109-.871.713-1.639 1.751-2.008v-.453h105.28c5.855.147 4.489 2.116 8.923
     5.768l.076 4.733c-2.938 2.571-5.947 3.515-8.999 3.481H33.267z"

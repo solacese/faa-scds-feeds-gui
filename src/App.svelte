@@ -3,8 +3,7 @@
   import { writable } from "svelte/store";
   import { googleMapsConfig } from "./google-maps.config";
   import { solaceContextKey } from "./solace-client";
-  import ConnectionForm from "./ConnectionForm.svelte";
-  import FeedToggles from "./FeedToggles.svelte";
+  import Toolbar from "./Toolbar.svelte";
   import Map from "./Map.svelte";
   import Console from "./Console.svelte";
 
@@ -16,22 +15,7 @@
   setContext(solaceContextKey, {
     getSolaceClient: () => solaceClient,
   });
-
-  let isConsoleExpanded = true;
 </script>
-
-<style>
-  .layout {
-    grid-template-columns: 28rem auto;
-    grid-template-areas: "sidebar mainContent";
-  }
-  .sidebar {
-    grid-area: sidebar;
-  }
-  .mainContent {
-    grid-area: mainContent;
-  }
-</style>
 
 <svelte:head>
   <script
@@ -44,25 +28,26 @@
   </script>
 </svelte:head>
 
-<main class="p-2 overflow-x-hidden max-w-screen lg:h-screen lg:grid lg:gap-4 lg:p-4 layout">
-  <div class="flex flex-col sidebar">
-    <div>
-      <ConnectionForm />
-    </div>
-    <!-- <div class="mt-4">
-      <FeedToggles />
-    </div> -->
+<main class="flex flex-col min-h-screen p-4 lg:flex-row">
+  <div class="lg:min-h-full">
+    <Toolbar />
   </div>
-  <div class="flex flex-col mainContent">
+  <!-- spacer-4 -->
+  <div class="w-4 h-4" />
+  <!-- /spacer -->
+  <div class="flex flex-col flex-grow">
     {#if googleMapsLoaded}
-      <div class="p-2 mt-4 bg-white rounded-lg shadow h-96 lg:h-full lg:mt-0">
+      <div class="p-2 mt-4 bg-white rounded-lg shadow h-1/2-screen lg:h-full lg:mt-0">
         <Map />
       </div>
     {:else}
-      <div class="w-full bg-blue-300 rounded-lg shadow" />
+      <div class="w-full h-screen p-2 mt-4 bg-blue-300 rounded-lg shadow lg:h-full lg:mt-0" />
     {/if}
-    <!-- <div class="w-full mt-4 bg-white rounded-lg shadow">
-      <Console bind:isExpanded={isConsoleExpanded} />
-    </div> -->
+    <!-- spacer-4 -->
+    <div class="w-4 h-4" />
+    <!-- /spacer -->
+    <div>
+      <Console />
+    </div>
   </div>
 </main>

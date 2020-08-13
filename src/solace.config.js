@@ -1,9 +1,16 @@
 // Solace hosted SCDS service
+// export const solaceConfig = {
+//   SOLACE_HOST_URL: "wss://mr17km0laaj0b.messaging.solace.cloud:443",
+//   SOLACE_MESSAGE_VPN: "scds",
+//   SOLACE_USERNAME: "solace-cloud-client",
+//   SOLACE_PASSWORD: "9s866156nmb5pra5ijab28dgac",
+// };
+
 export const solaceConfig = {
-  SOLACE_HOST_URL: "wss://mr17km0laaj0b.messaging.solace.cloud:443",
-  SOLACE_MESSAGE_VPN: "scds",
+  SOLACE_HOST_URL: "wss://mr6cmufo3kilp.messaging.solace.cloud:443",
+  SOLACE_MESSAGE_VPN: "ajr",
   SOLACE_USERNAME: "solace-cloud-client",
-  SOLACE_PASSWORD: "9s866156nmb5pra5ijab28dgac",
+  SOLACE_PASSWORD: "ig8pf95kah4appnglvkrgn2hot",
 };
 
 // Locally running PubSub+ Software defaults

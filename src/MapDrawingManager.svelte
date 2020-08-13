@@ -32,8 +32,10 @@
 
   function clearSelection() {
     if ($mapCurrentSelection) {
-      $mapCurrentSelection.setOptions({ fillColor: inactiveColor });
-      $mapCurrentSelection = null;
+      if ($mapCurrentSelection.type == "rectangle") {
+        $mapCurrentSelection.setOptions({ fillColor: inactiveColor });
+        $mapCurrentSelection = null;
+      }
     }
   }
 
