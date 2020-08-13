@@ -31947,7 +31947,7 @@ var app = (function () {
       iconAngle = "315";
     }
 
-    return "/images/plane-sprite/plane-".concat(iconAngle, ".png");
+    return "images/plane-sprite/plane-".concat(iconAngle, ".png");
   }
 
   function radiansToDegrees(radians) {
