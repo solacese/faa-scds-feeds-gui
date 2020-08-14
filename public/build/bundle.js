@@ -32512,11 +32512,11 @@ var app = (function () {
         t1 = space();
         create_component(mapsubscriptionmanager.$$.fragment);
         attr_dev(div0, "class", "flex-shrink-0 h-8 p-1 my-auto");
-        add_location(div0, file$5, 77, 2, 3402);
+        add_location(div0, file$5, 77, 2, 3317);
         attr_dev(div1, "class", "w-full h-full");
-        add_location(div1, file$5, 82, 2, 3515);
+        add_location(div1, file$5, 82, 2, 3430);
         attr_dev(div2, "class", "flex flex-col w-full h-full");
-        add_location(div2, file$5, 76, 0, 3358);
+        add_location(div2, file$5, 76, 0, 3273);
       },
       l: function claim(nodes) {
         throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -32721,7 +32721,7 @@ var app = (function () {
           // @googlemaps, I learned this through brute force troubleshooting & some obscure blog post, not docs :(
           $markerCluster.getMarkers().filter(function (marker) {
             return $mapUpdateBatch.remove[marker.title];
-          }), true); // second parameter nodraw set to true because don't need 2 redraws per update
+          }));
         } // add markers that are marked for adding
 
 

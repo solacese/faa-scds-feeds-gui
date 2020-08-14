@@ -55,9 +55,8 @@
             // @googlemaps, I learned this through brute force troubleshooting & some obscure blog post, not docs :(
             $markerCluster.getMarkers().filter((marker) => {
               return $mapUpdateBatch.remove[marker.title];
-            }),
-            true
-          ); // second parameter nodraw set to true because don't need 2 redraws per update
+            })
+          );
         }
         // add markers that are marked for adding
         $markerCluster.addMarkers(Object.values($mapUpdateBatch.add));
