@@ -13,6 +13,7 @@
       position: google.maps.ControlPosition.TOP_CENTER,
       drawingModes: ["rectangle"],
     },
+    drawingMode: "rectangle",
     rectangleOptions: {
       fillColor: activeColor,
       fillOpacity: 0.35,
