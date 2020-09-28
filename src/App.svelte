@@ -21,7 +21,7 @@
   <script
     defer
     async
-    src={`https://maps.googleapis.com/maps/api/js?key=${googleMapsAccessToken}&libraries=drawing&callback=initMap`}>
+    src={`https://maps.googleapis.com/maps/api/js?key=${googleMapsAccessToken}&libraries=drawing,geometry&callback=initMap`}>
     // Google Maps isn't available as a Node package because... Google eats glue? I have no idea.
     // This script loads the Google Maps package and then calls the initMap callback defined in main.js,
     // which will set this component's googleMapsLoaded state flag to true on completion.
