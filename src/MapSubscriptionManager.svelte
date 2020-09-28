@@ -2,7 +2,7 @@
   import { getContext } from "svelte";
   import { fdpsFeedCache, filters, markers, mapCurrentSelection, mapUpdateBatch } from "./stores";
   import { solaceContextKey } from "./solace-client";
-  import { parseFdpsPositionTick, getRotatedIconUrl } from "./feed-fdps";
+  import { parseFdpsPositionTick, getRotationAngle } from "./feed-fdps";
   import { containedByOneOrMoreRectangleBounds, createFdpsSubscriptionList } from "./geo-filtering";
 
   const { getSolaceClient } = getContext(solaceContextKey);
