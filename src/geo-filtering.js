@@ -37,7 +37,7 @@ export function createFdpsSubscriptionList(rectanglesMap) {
       for (const pointLat of templateRows) {
         const filterLat = getTopicFilter(pointLat, latDecimalPlace);
         const filterLng = getTopicFilter(pointLng, lngDecimalPlace);
-        topicFilters[`FDPS/position/*/*/*/${filterLat}/${filterLng}/*/*/*/*`] = true;
+        topicFilters[`FDPS/position/*/*/*/*/*/${filterLat}/${filterLng}/*/*/*/*`] = true;
       }
     }
   });
@@ -48,7 +48,7 @@ function getWildcardDecimalPlace(distance) {
   let absDistance = Math.abs(distance);
   let decimalPlace;
   if (absDistance >= 10) {
-    decimalPlace = 1;
+    decimalPlace = 10;
   } else if (absDistance >= 1) {
     decimalPlace = 1;
   } else if (absDistance >= 0) {
@@ -57,11 +57,9 @@ function getWildcardDecimalPlace(distance) {
     decimalPlace = 0.01;
   } else if (absDistance >= 0.01) {
     decimalPlace = 0.001;
-  } else if (absDistance >= 0.001) {
-    decimalPlace = 0.0001;
   } else {
-    // handle 5 decimal points
-    decimalPlace = 0.00001;
+    // handle 4 decimal points
+    decimalPlace = 0.0001;
   }
   return decimalPlace;
 }
@@ -72,26 +70,24 @@ function getTopicFilter(point, decimalPlace) {
   // ... but we need to convert it back to a string/array to create a topic filter string.
   // I guess could index the decimal places, but I don't think it's necessary for this.
 
-  const pointArray = point.toFixed(5).toString().split("");
+  const pointArray = point.toFixed(4).toString().split("");
   const decimalPointIndex = pointArray.indexOf(".");
 
   if (decimalPlace >= 10) {
     pointArray[decimalPointIndex - 1] = "*";
-    return pointArray.slice(0, decimalPointIndex).join("");
+    return padWithZero(pointArray.slice(0, decimalPointIndex).join(""));
   } else if (decimalPlace >= 1) {
     pointArray[decimalPointIndex + 1] = "*";
-    return pointArray.slice(0, decimalPointIndex + 2).join("");
+    return padWithZero(pointArray.slice(0, decimalPointIndex + 2).join(""));
   } else if (decimalPlace >= 0.1) {
     pointArray[decimalPointIndex + 2] = "*";
-    return pointArray.slice(0, decimalPointIndex + 3).join("");
+    return padWithZero(pointArray.slice(0, decimalPointIndex + 3).join(""));
   } else if (decimalPlace >= 0.01) {
     pointArray[decimalPointIndex + 3] = "*";
-    return pointArray.slice(0, decimalPointIndex + 4).join("");
-  } else if (decimalPlace >= 0.001) {
-    pointArray[decimalPointIndex + 4] = "*";
-    return pointArray.slice(0, decimalPointIndex + 5).join("");
+    return padWithZero(pointArray.slice(0, decimalPointIndex + 4).join(""));
   } else {
-    return pointArray.slice(0, decimalPointIndex + 5).join("");
+    pointArray[decimalPointIndex + 4] = "*";
+    return padWithZero(pointArray.slice(0, decimalPointIndex + 5).join(""));
   }
 }
 
@@ -131,4 +127,45 @@ export function containedByOneOrMoreRectangleBounds(latLngObj, rectanglesMap) {
     }
   });
   return isContained;
+}
+
+function padWithZero(numAsString) {
+  if (numAsString.includes(".") && numAsString.includes("-")) {
+    let { 0: integers, 1: decimals } = numAsString.split(".");
+    if (Number(integers) > -100) {
+      // splice out "-"
+      let integerNumbers = integers.substring(1, integers.length + 1);
+      // pad start
+      let paddedNumbers = integerNumbers.padStart(3, 0);
+      // return formed string
+      return "-" + paddedNumbers + "." + decimals;
+    }
+    return "-" + integers + "." + decimals;
+  } else if (numAsString.includes(".")) {
+    let { 0: integers, 1: decimals } = numAsString.split(".");
+    if (Number(integers) < 100) {
+      // pad start
+      let paddedNumbers = integers.padStart(3, 0);
+      // return formed string
+      return paddedNumbers + "." + decimals;
+    }
+    return integers + "." + decimals;
+  } else if (numAsString.includes("-")) {
+    if (numAsString.length <= 3) {
+      // splice out "-"
+      let numbers = numAsString.substring(1, numAsString.length + 1);
+      // pad start
+      let paddedNumbers = numbers.padStart(3, 0);
+      // return formed string
+      return "-" + paddedNumbers;
+    }
+    return numAsString;
+  } else if (numAsString.length <= 2) {
+    // pad start
+    let paddedNumbers = numAsString.padStart(3, 0);
+    // return formed string
+    return paddedNumbers;
+  } else {
+    return numAsString;
+  }
 }
