@@ -2,7 +2,6 @@
   import { getContext } from "svelte";
   import { connectMachine } from "./stores";
   import { createSolaceClient, solaceContextKey } from "./solace-client";
-  import { solaceConfig } from "./solace.config";
   import ConnectionSpinner from "./ConnectionSpinner.svelte";
 
   const { state, send } = $connectMachine;
