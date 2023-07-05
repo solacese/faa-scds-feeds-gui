@@ -9,7 +9,7 @@
   const { getSolaceClient } = getContext(solaceContextKey);
   let solaceClient = getSolaceClient();
 
-  let url = "wss://mrxqumn51vyv1.messaging.solace.cloud:443";
+  let url = "wss://swim.messaging.solace.cloud:443";
   let vpnName = "scds";
   let userName = "solace-cloud-client";
   let password = "djism9m131tv04o0qlvmg6bjo0";
