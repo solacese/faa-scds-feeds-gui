@@ -47,6 +47,7 @@ The build command is...
 
 ```bash
 npm run build
+
 ```
 
 ...and the publish directory is `public`.
