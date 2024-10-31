@@ -37,7 +37,7 @@ export function createFdpsSubscriptionList(rectanglesMap) {
       for (const pointLat of templateRows) {
         const filterLat = getTopicFilter(pointLat, latDecimalPlace);
         const filterLng = getTopicFilter(pointLng, lngDecimalPlace);
-        topicFilters[`FDPS/position/*/*/*/*/*/${filterLat}/${filterLng}/*/*/*/*`] = true;
+        topicFilters[`FDPS/position/*/*/*/*/*/${filterLat}/${filterLng}/*/*/*`] = true;
       }
     }
   });
