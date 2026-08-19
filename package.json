@@ -34,7 +34,7 @@
     "@sveltejs/svelte-virtual-list": "^3.0.1",
     "@tailwindcss/ui": "^0.3.0",
     "@xstate/fsm": "^1.4.0",
-    "solclientjs": "^10.4.0",
+    "solclientjs": "^10.18.3",
     "svelte": "^3.23.2",
     "svelte-preprocess": "^4.0.10",
     "tailwindcss": "^1.4.6"
